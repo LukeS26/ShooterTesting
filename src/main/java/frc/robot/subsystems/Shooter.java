@@ -26,10 +26,11 @@ public class Shooter extends SubsystemBase {
     leader = new CANSparkMax(RobotMap.SHOOTER_LEADER, MotorType.kBrushless);
     follower = new CANSparkMax(RobotMap.SHOOTER_FOLLOWER, MotorType.kBrushless);
 
-    follower.follow(leader);
+    follower.follow(leader, true);
     leaderEnc = leader.getEncoder();
 
     shooterPid = leader.getPIDController();
+    shooterPid.setOutputRange(0, 1);
 
     shooterPid.setP(Constants.SHOOTER_P);
     shooterPid.setI(Constants.SHOOTER_I);
@@ -61,7 +62,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean atSetpoint() {
-    return Math.abs(shooterPidSetpoint - leaderEnc.getVelocity()) < 200;
+    return Math.abs(shooterPidSetpoint - leaderEnc.getVelocity()) < 30;
   }
 
   public void stop() {

@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.robot.commands.Shoot;
 import frc.robot.subsystems.Indexer;
@@ -27,15 +28,15 @@ public class RobotContainer {
   public static Shooter shooter = new Shooter();
   public static Indexer indexer = new Indexer();
 
-  NetworkTableEntry distance;
+  public static NetworkTableEntry distance;
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the button bindings
-    configureButtonBindings();
-
+    
     var tab = Shuffleboard.getTab("Match");
     distance = tab.add("Distance", 0).getEntry();
+    // Configure the button bindings
+    configureButtonBindings();
   }
 
   /**
@@ -46,7 +47,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     Button shoot = new Button(controller::getAButton);
-    shoot.whenHeld(new Shoot(distance.getDouble(1)) );
+    shoot.whenHeld(new Shoot(distance.getDouble(0)) );
   }
 
   /**
@@ -56,6 +57,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return new InstantCommand();
   }
 }
