@@ -25,51 +25,41 @@ public class Shoot extends CommandBase {
   public void execute() {
     double targetHeight = 2.64;
     double robotHeight = 0.38;
-    dist = 2.54;
+    double dist = 2.56;
 
-    if (dist >= 2.381) {
+    if (dist >= 2.7) {
       angle = Math.atan( ((Math.tan(-0.698131701) * (dist)) - (2 * (targetHeight - robotHeight))) / -dist );
     } else {
       angle = Math.atan( ((Math.tan(-1.21) * (dist)) - (2 * (targetHeight - robotHeight))) / -dist );
     }
 
-    //speed = Math.sqrt(-(9.8 * dist * dist * (1 + (Math.tan(angle) * Math.tan(angle)))) / (2 * (targetHeight - robotHeight) - (2 * dist * Math.tan(angle))));
-    double result = (targetHeight - robotHeight);
+		double result = (targetHeight - robotHeight);
     double error = result - eq(speed, angle, dist);
 
-    
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < 25; i++) {
       if(Math.abs(error) > 0.1) {
         if(error > 0) {
           speed += speed/2;
         } else {
           speed -= speed/2;
         }
+
+      	error = result - eq(speed, angle, dist);
       }
-  
-      error = result - eq(speed, angle, dist);
     }
+
     double vX = Math.cos(angle) * speed;
     double initDrag = 0.2 * 1.225 * 0.0145564225 * Math.PI * vX * vX / 0.27;
-    double time = dist / ( speed * Math.sin(angle) );
+    double time = dist / ( speed * Math.cos(angle) );
     
-    speed += (initDrag * time * time * 0.5 );
-
-    System.out.println((speed));
-    System.out.println(angle);
+    System.out.println(msToRPM(speed + (initDrag * time * time * 0.5 ) ) );
+    System.out.println(speed + (initDrag * time * time * 0.5 ));
+		System.out.println( Math.toDegrees(angle) );
 
     RobotContainer.shooter.setHoodAngle((Math.PI / 2 ) - angle);
-    RobotContainer.shooter.setShooter( msToRPM(speed) );
+    RobotContainer.shooter.setShooter( msToRPM(speed + (initDrag * time * time * 0.5)) );
 
-    /*
-		double vX = Math.Cos(angle) * speed;
-    double initDrag = 0.2 * 1.225 * 0.0145564225 * Math.PI * vX * vX / 0.27;
-    double time = dist / ( speed * Math.Cos(angle) * Math.Cos(turn) );
-    
-    speed += (initDrag * time * time * 0.5 );
-    */
-
-    if(RobotContainer.shooter.atSetpoint()) {
+    if(RobotContainer.shooter.atSetpoint() && Math.abs(error) < 0.1) {
       RobotContainer.indexer.feed();
     } else {
       RobotContainer.indexer.stop();
