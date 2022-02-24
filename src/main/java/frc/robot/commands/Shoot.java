@@ -24,8 +24,8 @@ public class Shoot extends CommandBase {
   @Override
   public void execute() {
     double targetHeight = 2.64;
-    double robotHeight = 0.79;
-    double dist = 1;
+    double robotHeight = 0.38;
+    double dist = 2.718;
 
     if (dist >= 2.7) {
       angle = Math.atan( ((Math.tan(-0.698131701) * (dist)) - (2 * (targetHeight - robotHeight))) / -dist );
@@ -52,10 +52,6 @@ public class Shoot extends CommandBase {
     double vX = Math.cos(angle) * speed;
     double initDrag = 0.2 * 1.225 * 0.0145564225 * Math.PI * vX * vX / 0.27;
     double time = dist / ( speed * Math.cos(angle) );
-    
-    System.out.println(msToRPM(speed + (initDrag * time * time * 0.5)));
-    System.out.println(speed + (initDrag * time * time * 0.5));
-		System.out.println( Math.toDegrees(angle) );
 
     RobotContainer.shooter.setHoodAngle((Math.PI / 2 ) - angle);
 
@@ -77,7 +73,7 @@ public class Shoot extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     RobotContainer.shooter.stop();
-    RobotContainer.shooter.setHood(0.5);
+    RobotContainer.shooter.setHood(0);
     RobotContainer.indexer.stop();
   }
 

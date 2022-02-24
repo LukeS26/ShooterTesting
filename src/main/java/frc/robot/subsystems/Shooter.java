@@ -43,7 +43,7 @@ public class Shooter extends SubsystemBase {
 
     hoodServo1.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
     hoodServo2.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
-    
+
     var tab = Shuffleboard.getTab("Match");
     tab.addNumber("RPM", leaderEnc::getVelocity);
   }
@@ -66,7 +66,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean atSetpoint() {
-    return Math.abs(shooterPidSetpoint - leaderEnc.getVelocity()) < 30;
+    return Math.abs(shooterPidSetpoint - leaderEnc.getVelocity()) < 50;
   }
 
   public void stop() {
