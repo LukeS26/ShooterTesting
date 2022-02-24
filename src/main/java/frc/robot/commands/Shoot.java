@@ -24,8 +24,8 @@ public class Shoot extends CommandBase {
   @Override
   public void execute() {
     double targetHeight = 2.64;
-    double robotHeight = 0.38;
-    double dist = 2.56;
+    double robotHeight = 0.79;
+    double dist = 1;
 
     if (dist >= 2.7) {
       angle = Math.atan( ((Math.tan(-0.698131701) * (dist)) - (2 * (targetHeight - robotHeight))) / -dist );
@@ -90,7 +90,7 @@ public class Shoot extends CommandBase {
   public static double msToRPM(double metersPerSec) {
     //rad/s to rpm = rad/s * 30 / PI
     double r = 0.0762;
-    return (metersPerSec / (r * 5.0 / 6.0) ) * 30.0 / Math.PI;
+    return (metersPerSec / (r * 2.0 / 3.0) ) * 30.0 / Math.PI;
   }
 
   static double eq(double speed, double angle, double xDist) {

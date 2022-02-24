@@ -10,6 +10,7 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -22,7 +23,7 @@ public class Shooter extends SubsystemBase {
 
   private double shooterPidSetpoint;
   /** Creates a new Shooter. */
-  public Shooter() {
+  public Shooter() {    
     leader = new CANSparkMax(RobotMap.SHOOTER_LEADER, MotorType.kBrushless);
     follower = new CANSparkMax(RobotMap.SHOOTER_FOLLOWER, MotorType.kBrushless);
 
@@ -42,6 +43,9 @@ public class Shooter extends SubsystemBase {
 
     hoodServo1.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
     hoodServo2.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
+    
+    var tab = Shuffleboard.getTab("Match");
+    tab.addNumber("RPM", leaderEnc::getVelocity);
   }
 
   public void setHoodAngle(double angle) {
