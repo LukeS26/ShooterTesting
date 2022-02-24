@@ -36,15 +36,16 @@ public class Shoot extends CommandBase {
 		double result = (targetHeight - robotHeight);
     double error = result - eq(speed, angle, dist);
 
-    for(int i = 0; i < 25; i++) {
+    for(int i = 0; i < 40; i++) {
       if(Math.abs(error) > 0.1) {
         if(error > 0) {
           speed += speed/2;
         } else {
           speed -= speed/2;
         }
-
       	error = result - eq(speed, angle, dist);
+      } else {
+        break;
       }
     }
 
@@ -60,7 +61,7 @@ public class Shoot extends CommandBase {
 
     if(Math.abs(error) < 0.5) {
       RobotContainer.shooter.setShooter( msToRPM(speed + (initDrag * time * time * 0.5)) );
-    } 
+    }
     //else {
     //   RobotContainer.shooter.setShooter(1300);
     // }
