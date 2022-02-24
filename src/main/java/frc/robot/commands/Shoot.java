@@ -53,8 +53,8 @@ public class Shoot extends CommandBase {
     double initDrag = 0.2 * 1.225 * 0.0145564225 * Math.PI * vX * vX / 0.27;
     double time = dist / ( speed * Math.cos(angle) );
     
-    System.out.println(msToRPM(speed + (initDrag * time * time * 0.5 ) ) );
-    System.out.println(speed + (initDrag * time * time * 0.5 ));
+    System.out.println(msToRPM(speed + (initDrag * time * time * 0.5)));
+    System.out.println(speed + (initDrag * time * time * 0.5));
 		System.out.println( Math.toDegrees(angle) );
 
     RobotContainer.shooter.setHoodAngle((Math.PI / 2 ) - angle);
@@ -95,12 +95,8 @@ public class Shoot extends CommandBase {
 
   double eq(double speed, double angle, double xDist) {
     double turn = 0;
-    if(xDist == 0) {
-      xDist = 0.01;
-    }
-    
-    //return speed * sin(angle) - 4.9;
-    
+    if(xDist == 0) { xDist = 0.01; }
+        
     return (speed * xDist * Math.sin(angle) / ((speed * Math.cos(turn) * Math.cos(angle) )) ) -  9.80665/2 * xDist * xDist / ((2*0 * speed * Math.cos(turn) * Math.cos(angle)) + (speed*Math.cos(turn)*Math.cos(angle)*speed*Math.cos(turn)*Math.cos(angle)) );
   }
 }
