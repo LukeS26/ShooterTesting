@@ -57,7 +57,13 @@ public class Shoot extends CommandBase {
 		System.out.println( Math.toDegrees(angle) );
 
     RobotContainer.shooter.setHoodAngle((Math.PI / 2 ) - angle);
-    RobotContainer.shooter.setShooter( msToRPM(speed + (initDrag * time * time * 0.5)) );
+
+    if(Math.abs(error) < 0.5) {
+      RobotContainer.shooter.setShooter( msToRPM(speed + (initDrag * time * time * 0.5)) );
+    } 
+    //else {
+    //   RobotContainer.shooter.setShooter(1300);
+    // }
 
     if(RobotContainer.shooter.atSetpoint() && Math.abs(error) < 0.1) {
       RobotContainer.indexer.feed();
