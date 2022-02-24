@@ -37,7 +37,7 @@ public class Shoot extends CommandBase {
     double error = result - eq(speed, angle, dist);
 
     for(int i = 0; i < 40; i++) {
-      if(Math.abs(error) > 0.1) {
+      if(Math.abs(error) > 0.2) {
         if(error > 0) {
           speed += speed/2;
         } else {
@@ -66,7 +66,7 @@ public class Shoot extends CommandBase {
     //   RobotContainer.shooter.setShooter(1300);
     // }
 
-    if(RobotContainer.shooter.atSetpoint() && Math.abs(error) < 0.1) {
+    if(RobotContainer.shooter.atSetpoint() && Math.abs(error) < 0.2) {
       RobotContainer.indexer.feed();
     } else {
       RobotContainer.indexer.stop();
@@ -93,10 +93,10 @@ public class Shoot extends CommandBase {
     return (metersPerSec / (r * 5.0 / 6.0) ) * 30.0 / Math.PI;
   }
 
-  double eq(double speed, double angle, double xDist) {
+  static double eq(double speed, double angle, double xDist) {
     double turn = 0;
     if(xDist == 0) { xDist = 0.01; }
-        
+    
     return (speed * xDist * Math.sin(angle) / ((speed * Math.cos(turn) * Math.cos(angle) )) ) -  9.80665/2 * xDist * xDist / ((2*0 * speed * Math.cos(turn) * Math.cos(angle)) + (speed*Math.cos(turn)*Math.cos(angle)*speed*Math.cos(turn)*Math.cos(angle)) );
   }
 }
